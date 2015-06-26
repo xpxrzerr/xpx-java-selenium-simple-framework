@@ -2,12 +2,12 @@ package com.xpanxion.training.java.selenium.core;
 
 import java.lang.reflect.Method;
 
+import org.junit.After;
+import org.junit.Before;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 
 import com.xpanxion.training.java.selenium.core.services.CSVService;
 
@@ -35,7 +35,7 @@ public class BaseTest {
 	 * annotation. This method is primarily responsible for obtaining a unique
 	 * WebDriver object for the test to use.
 	 */
-	@BeforeMethod
+	@Before
 	public void setup(Method m) {
 		LOG.debug("Initializing WebDriver...");
 		this.driver = new FirefoxDriver();
@@ -48,7 +48,7 @@ public class BaseTest {
 	 * annotation. This method is primarily responsible for taking care of all
 	 * clean up tasks, so that more tests may be run.
 	 */
-	@AfterMethod
+	@After
 	public void teardown(Method m) {
 		LOG.debug("Finished Test '{}'.", this.getTestName(m));
 		LOG.debug("Tearing down WebDriver...");
