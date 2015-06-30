@@ -34,7 +34,7 @@ public class CSVService {
 			LOG.error("Error reading file {}.", filename, ioe);
 		}
 		
-		return convertToTestNGFormat(rows);
+		return convertToTestNGFormat(rows, skipHeaderRow);
 	}
 	
 	/**
@@ -57,16 +57,6 @@ public class CSVService {
 	 * Converts a List<String[]> object to a TestNG friendly String[][] object.
 	 *  
 	 * @param data The list of data.
-	 * @return a TestNG friendly String[][] object.
-	 */
-	private String[][] convertToTestNGFormat(List<String[]> data) {
-		return this.convertToTestNGFormat(data, false);
-	}
-	
-	/**
-	 * Converts a List<String[]> object to a TestNG friendly String[][] object.
-	 *  
-	 * @param data The list of data.
 	 * @param skipHeaderRow If true, the first element in the <b>data</b> is ignored.
 	 * @return a TestNG friendly String[][] object.
 	 */
@@ -74,10 +64,11 @@ public class CSVService {
 		String[][] convertedData = null;
 		
 		if (null != data) {
-			convertedData = new String[data.size() - 1][];
 			int startingIndex = skipHeaderRow ? 1 : 0;
+			convertedData = new String[data.size() - startingIndex][];
+			int convertedDataIdx = 0;
 			for(int i = startingIndex; i < data.size(); i++) {
-				convertedData[i - 1] = data.get(i);
+				convertedData[convertedDataIdx++] = data.get(i);
 			}
 		}
 		
