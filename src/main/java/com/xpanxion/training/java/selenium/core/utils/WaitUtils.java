@@ -30,13 +30,8 @@ public class WaitUtils {
 	 * @param duration
 	 * @param timeout
 	 */
-	private static void iWaitUntilElementIsVisible(WebDriver driver, WebElement element, Duration duration, long timeout) {
-		try {
-	        sleeper.sleep(duration);
-		} catch (InterruptedException e) {
-			Thread.currentThread().interrupt();
-			throw new WebDriverException(e);
-		}
+	private static void iWaitUntilElementIsVisible(WebDriver driver, WebElement element, long duration, long timeout) {
+		hardWait(duration);
 		new WebDriverWait(driver, timeout).until(ExpectedConditions.visibilityOf(element));
 	}
 	
@@ -49,7 +44,7 @@ public class WaitUtils {
 	 * @param delay The delay (in milliseconds) before the wait begins.
 	 */
 	public static void waitUntilElementIsVisible(WebDriver driver, WebElement element, long delay) {
-		iWaitUntilElementIsVisible(driver, element, new Duration(delay, TimeUnit.MILLISECONDS), DEFAULT_TIMEOUT_MS);
+		iWaitUntilElementIsVisible(driver, element, delay, DEFAULT_TIMEOUT_MS);
 	}
 	
 	/**
@@ -61,7 +56,7 @@ public class WaitUtils {
 	 * @param timeout The length of time (in milliseconds) to attempt to wait until the <b>element</b> is found.
 	 */
 	public static void waitUntilElementIsVisible(WebDriver driver, WebElement element, long delay, long timeout) {
-		iWaitUntilElementIsVisible(driver, element, new Duration(delay, TimeUnit.MILLISECONDS), timeout);
+		iWaitUntilElementIsVisible(driver, element, delay, timeout);
 	}
 	
 	/**
@@ -74,5 +69,20 @@ public class WaitUtils {
 	 */
 	public static void waitUntilElementIsVisible(WebDriver driver, WebElement element) {
 		waitUntilElementIsVisible(driver, element, DEFAULT_DELAY_MS);
+	}
+	
+	/**
+	 * Performs a thread safe hard sleep of time <i>duration</i>.
+	 * 
+	 * @param duration
+	 */
+	public static void hardWait(long duration) {
+		final Duration _duration = new Duration(duration, TimeUnit.MILLISECONDS);
+		try {
+	        sleeper.sleep(_duration); 
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+			throw new WebDriverException(e);
+		}
 	}
 }
