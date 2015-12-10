@@ -41,8 +41,8 @@ public class PageObject {
 	public PageObject(WebDriver driver, String url) {
 		this.driver = driver;
 		
-		if (StringUtils.isEmpty(url)) {
-			this.driver.get("http://xpanxion.com/");
+		if (!StringUtils.isEmpty(url)) {
+			this.driver.get(url);
 		}
 		
 		this.load();
