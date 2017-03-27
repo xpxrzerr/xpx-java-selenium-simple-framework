@@ -2,7 +2,12 @@ package com.xpanxion.training.java.selenium.core;
 
 import org.junit.After;
 import org.junit.Before;
+import java.lang.reflect.Method;
+
+import io.github.bonigarcia.wdm.ChromeDriverManager;
+import io.github.bonigarcia.wdm.FirefoxDriverManager;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +34,8 @@ public class BaseTest {
 	@Before
 	public void setup() {
 		LOG.debug("Initializing WebDriver...");
-		this.driver = new FirefoxDriver();
+		ChromeDriverManager.getInstance().setup();
+		this.driver = new ChromeDriver();
 		LOG.debug("Finished initializing WebDriver!");
 	}
 
